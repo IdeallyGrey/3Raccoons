@@ -1,13 +1,19 @@
-[gd_scene load_steps=14 format=3 uid="uid://c6xx7q3qc31dk"]
+[gd_scene load_steps=17 format=3 uid="uid://c6xx7q3qc31dk"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_1hq0l"]
 [ext_resource type="Texture2D" uid="uid://b6on8ju654nd8" path="res://assets/gun_sprites.png" id="1_vvx2e"]
 [ext_resource type="AudioStream" uid="uid://ct2oi1jk2t7qw" path="res://assets/revolver_shot1.wav" id="3_ke57h"]
 [ext_resource type="Script" path="res://speedometer.gd" id="3_m8jk1"]
+[ext_resource type="Script" path="res://transmission.gd" id="4_7i4aj"]
 [ext_resource type="Texture2D" uid="uid://dby8lj7b88djc" path="res://icon.svg" id="5_gu6el"]
 [ext_resource type="Script" path="res://steering_wheel.gd" id="6_05lxp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o4fd3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_riwq6"]
+albedo_color = Color(0.662745, 0.384314, 0.376471, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r0rjx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4elyo"]
 atlas = ExtResource("1_vvx2e")
@@ -65,6 +71,30 @@ script = ExtResource("1_1hq0l")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_o4fd3")
+
+[node name="Block2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.604604)
+material_override = SubResource("StandardMaterial3D_riwq6")
+mesh = SubResource("BoxMesh_r0rjx")
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Block2"]
+
+[node name="Block3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.42892)
+material_override = SubResource("StandardMaterial3D_riwq6")
+mesh = SubResource("BoxMesh_r0rjx")
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Block3"]
+
+[node name="Block4" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.788255, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45328, 1.01183)
+material_override = SubResource("StandardMaterial3D_riwq6")
+mesh = SubResource("BoxMesh_r0rjx")
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Block4"]
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
@@ -208,14 +238,24 @@ grow_vertical = 2
 text = "Restart"
 
 [node name="Speedometer" type="ColorRect" parent="CanvasLayer"]
-offset_left = 352.0
+offset_left = 307.0
 offset_top = 516.0
-offset_right = 360.0
+offset_right = 315.0
 offset_bottom = 594.0
 rotation = -0.975639
 pivot_offset = Vector2(4, 78)
 color = Color(0.235294, 0, 0, 1)
 script = ExtResource("3_m8jk1")
+
+[node name="Transmission" type="RichTextLabel" parent="CanvasLayer"]
+offset_left = 851.0
+offset_top = 522.0
+offset_right = 937.0
+offset_bottom = 636.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 64
+text = "R"
+script = ExtResource("4_7i4aj")
 
 [node name="SteeringWheel" type="TextureRect" parent="CanvasLayer"]
 offset_left = 516.0
