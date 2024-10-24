@@ -1,0 +1,230 @@
+[gd_scene load_steps=14 format=3 uid="uid://c6xx7q3qc31dk"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_1hq0l"]
+[ext_resource type="Texture2D" uid="uid://b6on8ju654nd8" path="res://assets/gun_sprites.png" id="1_vvx2e"]
+[ext_resource type="AudioStream" uid="uid://ct2oi1jk2t7qw" path="res://assets/revolver_shot1.wav" id="3_ke57h"]
+[ext_resource type="Script" path="res://speedometer.gd" id="3_m8jk1"]
+[ext_resource type="Texture2D" uid="uid://dby8lj7b88djc" path="res://icon.svg" id="5_gu6el"]
+[ext_resource type="Script" path="res://steering_wheel.gd" id="6_05lxp"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o4fd3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4elyo"]
+atlas = ExtResource("1_vvx2e")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdnn0"]
+atlas = ExtResource("1_vvx2e")
+region = Rect2(512, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xb0nv"]
+atlas = ExtResource("1_vvx2e")
+region = Rect2(1024, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n6lgn"]
+atlas = ExtResource("1_vvx2e")
+region = Rect2(1536, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rudl1"]
+atlas = ExtResource("1_vvx2e")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1nxng"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4elyo")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdnn0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xb0nv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n6lgn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rudl1")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 10.0
+}]
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_1hq0l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_o4fd3")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+target_position = Vector3(0, 0, -1000)
+collision_mask = 3
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+fov = 80.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GunBase" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/GunBase"]
+position = Vector2(289.75, -109.75)
+scale = Vector2(0.592774, 0.592774)
+sprite_frames = SubResource("SpriteFrames_1nxng")
+animation = &"shoot"
+autoplay = "idle"
+frame = 3
+frame_progress = 1.0
+
+[node name="Crosshair2" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -558.0
+offset_top = 185.0
+offset_right = 562.0
+offset_bottom = 316.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Crosshair3" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -554.0
+offset_top = -320.0
+offset_right = 561.0
+offset_bottom = -294.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Crosshair4" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -579.0
+offset_top = -377.0
+offset_right = 536.0
+offset_bottom = -351.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.25613
+
+[node name="Crosshair5" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 317.0
+offset_top = 452.0
+offset_right = 1432.0
+offset_bottom = 478.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -1.25664
+
+[node name="DeathScreen" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/DeathScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -135.0
+offset_top = -74.0
+offset_right = 135.0
+offset_bottom = 74.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/DeathScreen/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.5
+offset_top = -48.0
+offset_right = 31.5
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "You ded"
+
+[node name="Button" type="Button" parent="CanvasLayer/DeathScreen/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.5
+offset_top = 5.0
+offset_right = 32.5
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Restart"
+
+[node name="Speedometer" type="ColorRect" parent="CanvasLayer"]
+offset_left = 352.0
+offset_top = 516.0
+offset_right = 360.0
+offset_bottom = 594.0
+rotation = -0.975639
+pivot_offset = Vector2(4, 78)
+color = Color(0.235294, 0, 0, 1)
+script = ExtResource("3_m8jk1")
+
+[node name="SteeringWheel" type="TextureRect" parent="CanvasLayer"]
+offset_left = 516.0
+offset_top = 491.0
+offset_right = 644.0
+offset_bottom = 619.0
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("5_gu6el")
+script = ExtResource("6_05lxp")
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ke57h")
